@@ -4,7 +4,7 @@ import type React from "react"
 
 import { useState, useEffect } from "react"
 import { createClient } from "@/lib/supabase/client"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import Link from "next/link"
 import Image from "next/image"
 import { Calendar, Mail, Lock, Eye, EyeOff, Sparkles } from "lucide-react"
@@ -19,6 +19,7 @@ export default function LoginPage() {
   const [error, setError] = useState("")
 
   const router = useRouter()
+  const searchParams = useSearchParams()
   const supabase = createClient()
 
   useEffect(() => {
@@ -32,7 +33,13 @@ export default function LoginPage() {
       }
     }
     checkUser()
-  }, [router, supabase.auth])
+
+    // Check if signup param is present
+    const signup = searchParams.get("signup")
+    if (signup === "true") {
+      setIsSignUp(true)
+    }
+  }, [router, supabase.auth, searchParams])
 
   const logActivity = async (activityType: string, details: any) => {
     try {
