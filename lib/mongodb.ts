@@ -12,6 +12,8 @@ const options = {
   tls: true,                          // enforce TLS
   serverApi: ServerApiVersion.v1,     // opt into the stable v1 API
   // retryWrites is on by default in SRV URIs, but you can set it explicitly:
+  tlsAllowInvalidCertificates: true,  // ← skip trusting the CA
+  tlsAllowInvalidHostnames: true, 
   retryWrites: true,
   // During development you can temporarily allow invalid certs—but remove this in prod:
   // tlsAllowInvalidCertificates: process.env.NODE_ENV === "development",
