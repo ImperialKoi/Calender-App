@@ -32,7 +32,12 @@ export async function POST(request: NextRequest) {
 
     return response
   } catch (error: any) {
-    console.error("Registration error:", error)
-    return NextResponse.json({ error: error.message || "Registration failed" }, { status: 400 })
+    console.error('Registration error:', error);
+    // Return a 500 for unexpected errors:
+    const status = error.message.includes('duplicate') ? 400 : 500;
+    return NextResponse.json(
+      { error: error.message || 'Registration failed' },
+      { status }
+    );
   }
 }
